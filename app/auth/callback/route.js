@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 // The client you created from the Server-Side Auth instructions
 import { createClient } from '@/lib/supabase/server'
+import { cookies } from 'next/headers'
 
 export async function GET(request) {
     console.log("Callback route hit")
@@ -15,6 +16,8 @@ export async function GET(request) {
 
   if (code) {
     const supabase = await createClient()
+    //console.log("Available cookies:", request.cookies.getAll().map(c =>    
+  //c.name))                                                     
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     console.log('Exchange result error - error:', error)
     if (!error) {

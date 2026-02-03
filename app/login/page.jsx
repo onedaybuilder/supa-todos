@@ -4,11 +4,14 @@ import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 
-const supabase = createClient()
+
 
 
 const Login = () => {
-     const router = useRouter()
+
+    const supabase = createClient()
+    
+    const router = useRouter()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -17,7 +20,11 @@ const Login = () => {
     const handleGoogleSignIn = async() =>{
         console.log("Sign in with google", email, password)
         
-        supabase.auth.signInWithOAuth({provider: 'google', options: {redirectTo: 'http://localhost:3001/auth/callback' }})
+        const {data, error} = await supabase.auth.signInWithOAuth({provider: 'google', options: {redirectTo: 'http://localhost:3001/auth/callback' }})
+
+        if(error){
+            console.error(error.message)
+        }
     }
     
     const handleSignUp= async() =>{
