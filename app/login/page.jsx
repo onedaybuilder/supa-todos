@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 const Login = () => {
 
     const supabase = createClient()
-    
+
     const router = useRouter()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -20,7 +20,7 @@ const Login = () => {
     const handleGoogleSignIn = async() =>{
         console.log("Sign in with google", email, password)
         
-        const {data, error} = await supabase.auth.signInWithOAuth({provider: 'google', options: {redirectTo: 'http://localhost:3001/auth/callback' }})
+        const {data, error} = await supabase.auth.signInWithOAuth({provider: 'google', options: {redirectTo: `${window.location.origin}/auth/callback` }})
 
         if(error){
             console.error(error.message)
